@@ -14,6 +14,11 @@ const serverConfig = {
   cert: fs.readFileSync('cert.pem'),
 };
 
+const app = require("./server");
+
+const port =  process.env.PORT|| 8443;
+const host ="0.0.0.0"
+
 // ----------------------------------------------------------------------------------------
 
 // Create a server for the client html page
@@ -69,4 +74,7 @@ http.createServer(function (req, res) {
     console.log(req.headers['host']+req.url);
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
-}).listen(HTTP_PORT);
+}).listen(HTTP_PORT, host,() => {
+  console.log("Server is up on port " + port);
+});
+
